@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Trabajador } from './modelos/trabajador';
 
 @Component({
@@ -6,9 +6,8 @@ import { Trabajador } from './modelos/trabajador';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent{
   titulo = 'Listado de Trabajadores';
-
 
  //declarar la variable trabajadores array del tipo Trabajador
   trabajadores:Array<Trabajador>=[
@@ -57,12 +56,22 @@ export class AppComponent {
   ]
 
  // metodo para borrar el trabajador pasado por id del array de trabajadores
-  borrar(id:number){}
+  borrar(id:number){
+    let trabajadorBorrado = this.trabajadores.indexOf(this.trabajadores[id]);
+    let confirma = confirm(`¿Estás seguro que quieres borrar a {{trabajadorBorrado.nombre}}?`);
+    if (confirma ==true) {this.trabajadores.splice(id,1)};
+  }
 
   // metodo para sumar un voto al trabajador pasado por id
-  sumaVoto(id:number){}
+  sumaVoto(id:number){
+    let trabajadorVotado = this.trabajadores[id];
+    trabajadorVotado.votos++;
+  }
 
   // metodo para restar un voto al trabajador pasado por id
-  restaVoto(id:number){}
+  restaVoto(id:number){
+    let trabajadorVotado = this.trabajadores[id];
+    trabajadorVotado.votos--;
+  }
 
 }

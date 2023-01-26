@@ -12,10 +12,14 @@ import { Trabajador} from '../modelos/trabajador';
 export class CardTrabajadorComponent implements OnInit{
 
   // decorador input para el trabajador que se le pasa desde el padre
+  @Input() trabajador!: Trabajador;
 
   // decxorador output para el evento likeTrabajador
+  @Output() eventoLike = new EventEmitter<number>();
   // decxorador output para el evento unlikeTrabajador
+  @Output() eventoUnlike = new EventEmitter<number>();
   // decxrador output para el evento borraTrabajador
+  @Output() borraTrabajador = new EventEmitter<number>();
 
   constructor() { }
 
@@ -23,11 +27,19 @@ export class CardTrabajadorComponent implements OnInit{
   }
 
   //metodo que recibe un trabajador y emite el evento likeTrabajador con el id del trabajador
-  like(trabajador:Trabajador){}
+  like(id:number){
+    this.eventoLike.emit(id);
+  }
 
   //metodo que recibe un trabajador y emite el evento unlikeTrabajador con el id del trabajador
-  unlike(trabajador:Trabajador){}
+  unlike(id:number){
+    this.eventoUnlike.emit(id);
+  }
 
   //metodo que recibe un trabajador y emite el evento borraTrabajador con el id del trabajador
-  eliminar(trabajador:Trabajador){}
+  eliminar(id:number){
+    let opcion = confirm(`¿Está seguro que quiere borrar a {{trabajador.nombre}}?`);
+    if (opcion == true) { this.borraTrabajador.emit(id)};
+
+  }
 }
