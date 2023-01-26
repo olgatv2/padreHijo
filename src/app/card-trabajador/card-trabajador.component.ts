@@ -38,8 +38,6 @@ export class CardTrabajadorComponent implements OnInit{
 
   //metodo que recibe un trabajador y emite el evento borraTrabajador con el id del trabajador
   eliminar(id:number){
-    let opcion = confirm(`¿Está seguro que quiere borrar a {{trabajador.nombre}}?`);
-    if (opcion == true) { this.borraTrabajador.emit(id)};
-
+    this.borraTrabajador.emit(id);
   }
 }
