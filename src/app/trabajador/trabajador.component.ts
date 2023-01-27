@@ -1,33 +1,33 @@
-import { Component, Input} from '@angular/core';
-import { CardTrabajadorComponent } from '../card-trabajador/card-trabajador.component';
+import { Component } from '@angular/core';
 import { Trabajador } from '../modelos/trabajador';
-
+import { TrabajadorService } from '../servicios/trabajador.service';
 
 @Component({
   selector: 'app-trabajador',
   templateUrl: './trabajador.component.html',
   styleUrls: ['./trabajador.component.css']
 })
-export class TrabajadorComponent {
 
-// metodo para borrar el trabajador pasado por id del array de trabajadores
-borrar(id:number){
-  let trabajadorBorrado = this.trabajadores.indexOf(this.trabajadores[id]);
-  let confirma = confirm(`¿Estás seguro que quieres borrar a {{trabajadorBorrado.nombre}}?`);
-  if (confirma ==true) {this.trabajadores.splice(id,1)};
-}
+export class TrabajadorComponent{
 
-// metodo para sumar un voto al trabajador pasado por id
-sumaVoto(id:number){
-  let trabajadorVotado = this.trabajadores[id];
-  trabajadorVotado.votos++;
-}
+  trabajadores:Trabajador[]=[];
+  titulo = "Listado de trabajadores";
 
-// metodo para restar un voto al trabajador pasado por id
-restaVoto(id:number){
-  let trabajadorVotado = this.trabajadores[id];
-  if (trabajadorVotado.votos != 0){
-    trabajadorVotado.votos--;
+  constructor(private servicioTrabajadores:TrabajadorService) {}
+
+  ngOnInit() {
+    this.trabajadores = this.servicioTrabajadores.getTrabajadores();
   }
-}
+
+  sumaVoto(id:number) {
+    this.servicioTrabajadores.sumaVoto(id);
+  }
+
+  restaVoto(id:number) {
+    this.servicioTrabajadores.restaVoto(id);
+  }
+
+  borrar(id:number) {
+    this.servicioTrabajadores.borrar(id);
+  }
 }

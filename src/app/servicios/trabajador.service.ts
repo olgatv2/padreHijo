@@ -1,15 +1,14 @@
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Trabajador } from '../modelos/trabajador';
 
 @Injectable({
   providedIn: 'root'
 })
+export class TrabajadorService {
 
-export class ServiciosComponent {
+  constructor() { }
 
-  constructor() {}
-
-  private titulo:string = 'Listado de Trabajadores';
+  private titulo:string = 'Listado trabajadores';
   private trabajadores:Array<Trabajador> = [
     {
       id:1,
@@ -55,29 +54,31 @@ export class ServiciosComponent {
     }
   ]
 
-
-  public getTitulo(): string {
+  public getTitulo() {
     return this.titulo;
   }
 
-  public getTrabajadores(): Array<Trabajador> {
+  public getTrabajadores() {
     return this.trabajadores;
   }
 
   public getById(id:number) {
-    return this.trabajadores.find(a=> a.id === id);
+    return this.trabajadores[id];
   }
+  public sumaVoto(id:number) {
+    let trabajadorVotado = this.trabajadores.find(a => a.id === id);
+    trabajadorVotado!.votos++;
+   }
 
-  public setVotos(id:number, value:number) {
-    //Rehacer función
-    // let trabajador = this.getById(id);
-    // (trabajador) && (trabajador.votos !=0) && (value < 0) ?
+   public restaVoto(id:number) {
+     let trabajadorVotado = this.trabajadores.find(a => a.id === id);
+     if (trabajadorVotado!.votos > 0){
+       trabajadorVotado!.votos--;
+     }
+   }
 
-  }
-
-  public borrar(id:number): void {
-    let trabajador = this.trabajadores.findIndex(a=>a.id == id);
-    this.trabajadores.splice(trabajador,1);
-
-  }
+   public borrar(id:number): void {
+     let trabajador = this.trabajadores.findIndex(a=>a.id == id);
+     this.trabajadores.splice(trabajador,1);
+   }
 }
